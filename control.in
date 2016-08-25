@@ -1,0 +1,9 @@
+Package: libpve-storage-custom-mpnetapp-perl
+Version: @@VERSION@@-@@PKGRELEASE@@
+Section: perl
+Priority: optional
+Architecture: @@ARCH@@
+Depends: libpve-storage-perl, multipath-tools, sg3-utils
+Maintainer: Dmitry Petuhov <mityapetuhov@gmail.com>
+Description: Proxmox VE plugin for NetApp SAN.
+ This package contains storage plugin to use Netapp SAN with Proxmox VE.
