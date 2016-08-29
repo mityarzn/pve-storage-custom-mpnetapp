@@ -1,0 +1,62 @@
+    Proxmox VE plugin to deal with Netapp SANs.
+
+Designed to work over open-iscsi or FC multipath. Also works over
+libiscsi, but this mode gives strange behavior, so is not recommended.
+
+Currently tested over open-iscsi multipath. My SAN works in "7-mode",
+but plugin should work with cluster-mode setups. Set in in config
+(seel below). Testing and patches for cluster-mode would be much
+appreciated.
+
+To work over multipath, you need to set
+     uid_attribute ID_WWN_WITH_EXTENSION
+in /etc/multipath.conf and blacklist by default all SAN's LUNs.
+
+Here's my config:
+------------------------------------------------------------------------
+defaults {
+        polling_interval        2
+        path_selector           "round-robin 0"
+        path_grouping_policy    multibus
+        uid_attribute           ID_WWN_WITH_EXTENSION
+        rr_min_io               100
+        failback                immediate
+        no_path_retry           queue
+        user_friendly_names     yes
+        path_checker            tur
+}
+blacklist {
+        wwid .*
+}
+blacklist_exceptions {
+}
+multipaths {
+}
+------------------------------------------------------------------------
+
+PVE currently doesn't offers interface to add custom plugins via GUI,
+so storage needs to be configured manually. Here's my
+/etc/pve/storage.conf part:
+------------------------------------------------------------------------
+mpnetapp: filer1
+        content images,rootdir
+        adminserver 10.X.Y.Z
+        login pve
+        password some-password
+        aggregate aggr0
+        api 7
+        igroup pve-test
+        media multipath
+        target iqn.1992-08.com.netapp:sn.111111111
+        shared 1
+------------------------------------------------------------------------
+
+For cluster-mode you need to chande api to 8 and add vserver property
+with hostname/ipaddress of vserver for this cluster.
+
+igroup is initiator group manually configured on SAN. Can be either
+iSCSI or FC group.
+
+If you set media to iscsi, then storage will use libiscsi for LUN access
+in qemu. LXC can't use libiscsi. This mode could bring some advantages,
+but I experienced some strange bugs in it, so I dont'recomment it.

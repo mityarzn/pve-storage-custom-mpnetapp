@@ -38,6 +38,7 @@ deb ${DEB}:
 	sed -e s/@@VERSION@@/${VERSION}/ -e s/@@PKGRELEASE@@/${PKGREL}/ -e s/@@ARCH@@/${ARCH}/ <control.in >debian/DEBIAN/control
 	install -D -m 0644 copyright debian/${DOCDIR}/copyright
 	install -m 0644 changelog.Debian debian/${DOCDIR}/
+	install -m 0644 README debian/${DOCDIR}/
 	install -m 0644 triggers debian/DEBIAN
 	gzip -9 debian/${DOCDIR}/changelog.Debian
 	dpkg-deb --build debian
