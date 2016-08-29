@@ -471,6 +471,7 @@ sub options {
 	api => { optional => 1 },
 	media => { optional => 1 },
 	target => { optional => 1 },
+	shared => { optional => 1 },
     }
 }
 
