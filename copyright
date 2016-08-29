@@ -1,6 +1,7 @@
 Copyright (C) 2016 Dmitry Petuhov <mityapetuhov@gmail.com>
 
 This software is written by Dmitry Petuhov <mityapetuhov@gmail.com>
+Based on plugin for cluster-mode NFS by Alexandre Derumier <aderumier@odiso.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as published by

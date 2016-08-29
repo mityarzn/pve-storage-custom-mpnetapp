@@ -3,7 +3,7 @@ Version: @@VERSION@@-@@PKGRELEASE@@
 Section: perl
 Priority: optional
 Architecture: @@ARCH@@
-Depends: libpve-storage-perl, multipath-tools, sg3-utils
+Depends: libpve-storage-perl, multipath-scan
 Maintainer: Dmitry Petuhov <mityapetuhov@gmail.com>
 Description: Proxmox VE plugin for NetApp SAN.
  This package contains storage plugin to use Netapp SAN with Proxmox VE.
