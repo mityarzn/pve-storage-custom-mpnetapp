@@ -1,3 +1,9 @@
+libpve-storage-custom-mpnetapp-perl (1.0-3) unstable; urgency=medium
+
+  * Depend on libpve-storage-perl >=4.0-58 (where plugin support appeared)
+
+ -- Dmitry Petuhov <mityapetuhov@gmail.com>  Tue, 27 Sep 2016 17:05:35 +0300
+
 libpve-storage-custom-mpnetapp-perl (1.0-2) unstable; urgency=medium
 
   * Proper dependency
