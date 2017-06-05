@@ -371,7 +371,8 @@ sub multipath_enable {
 
     # Scan storage bus for new paths. Linux SCSI subsystem is not automatic,
     # so it doesn't know when new LUNS appear|disappear, and we need to kick it.
-    run_command(['/usr/sbin/multipath-scan.sh', '--rescan-all']);
+    run_command(['/usr/bin/iscsiadm', '-m', 'session', '-R']);
+    run_command(['/sbin/multipath', '-r', "0x$wwn"]);
 
     #force devmap reload to connect new device
     system('/sbin/multipath', '-r');
@@ -645,11 +646,12 @@ sub volume_resize {
     my ($class, $scfg, $storeid, $volname, $size, $running) = @_;
 
     netapp_resize_volume($scfg, $volname, $size);
-    netapp_resize_lun($scfg, $volname, $volname, $size);
+    netapp_resize_lun($scfg, $volname, $size);
 
     if ($scfg->{'media'} eq 'multipath') {
 	my $wwn = $class->mp_get_wwn($scfg,$volname);
-	run_command(['/usr/sbin/multipath-scan.sh', '--rescan-wwid', "0x$wwn"]);
+	run_command(['/usr/bin/iscsiadm', '-m', 'session', '-R']);
+	run_command(['/sbin/multipath', '-r', "0x$wwn"]);
     }
     return 1;
 }
@@ -669,7 +671,8 @@ sub volume_snapshot_rollback {
     #size could be changed here? Check for device changes.
     if ($scfg->{'media'} eq 'multipath') {
 	my $wwn = $class->mp_get_wwn($scfg,$volname);
-	run_command(['/usr/sbin/multipath-scan.sh', '--rescan-wwid', "0x$wwn"]);
+	run_command(['/usr/bin/iscsiadm', '-m', 'session', '-R']);
+	run_command(['/sbin/multipath', '-r', "0x$wwn"]);
     }
     return 1;
 }
