@@ -49,6 +49,7 @@ mpnetapp: filer1
         media multipath
         target iqn.1992-08.com.netapp:sn.111111111
         shared 1
+        efficiency 0
 ------------------------------------------------------------------------
 
 For cluster-mode you need to chande api to 8 and add vserver property

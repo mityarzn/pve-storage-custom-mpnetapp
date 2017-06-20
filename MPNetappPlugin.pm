@@ -455,6 +455,10 @@ sub properties {
 	    default => 'multipath',
 	    enum => ['iscsi', 'multipath'],
 	},
+	efficiency => {
+	    description => "Enable Storage Efficiency",
+	    type => 'boolean',
+	},
     };
 }
 
@@ -473,6 +477,7 @@ sub options {
 	media => { optional => 1 },
 	target => { optional => 1 },
 	shared => { optional => 1 },
+	efficiency => { optional => 1 },
     }
 }
 
@@ -543,8 +548,10 @@ sub alloc_image {
 
     # Netapp's GUI reserves 5% for snapshots by default, reproduce it.
     netapp_create_volume($scfg, $name, int($size*1.05)*1024);
-    netapp_sisenable_volume($scfg, $name);
-    netapp_sissetconfig_volume($scfg, $name);
+    if ($scfg->{'efficiency'}) {
+	netapp_sisenable_volume($scfg, $name);
+	netapp_sissetconfig_volume($scfg, $name);
+    }
     netapp_autosize_volume($scfg, $name);
     netapp_snapshotsetreserve_volume($scfg, $name);
     netapp_create_lun($scfg, $name, $size*1024);

@@ -1,6 +1,6 @@
 VERSION=1.0
 PACKAGE=libpve-storage-custom-mpnetapp-perl
-PKGREL=4
+PKGREL=5
 
 DESTDIR=
 PREFIX=/usr

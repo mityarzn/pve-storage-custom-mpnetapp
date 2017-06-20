@@ -1,3 +1,9 @@
+libpve-storage-custom-mpnetapp-perl (1.0-5) unstable; urgency=medium
+
+  * Make storage efficiency disableable. Because it slows down storage and causes high CPU usage.
+
+ -- Dmitry Petuhov <mityapetuhov@gmail.com>  Tue, 20 Jun 2017 14:29:03 +0300
+
 libpve-storage-custom-mpnetapp-perl (1.0-4) unstable; urgency=medium
 
   * Do iscsi devices rescans by iscsiadm instead of /sys filesystem. So we drop support for FC.
